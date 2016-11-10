@@ -1,0 +1,22 @@
+Build:
+
+To build on OsX:
+
+> ./Configure darwin64-x86_64-cc -shared
+> make
+
+Modifications:
+
+- Add speck.h in /include/openssl/ to define API methods for Speck
+
+- Modify c_allc.c in /crypto/evp to make Speck 128/256 CBC cipher availabel in libcrypto (line 214)
+
+- Modify evp.h in /include/openssl/ to define EVP Speck cipher (line 826)
+
+- Created speck directory in /crypto with:
+
+	- speck.c containing main code with Speck low-level implementations
+	- speck_locl.h containing headers for speck.c file
+	- speck_cbc.c calling CBC impementations
+	- speck_misc.c containg API implemtations calling low-level implementations
+

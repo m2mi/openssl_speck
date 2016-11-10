@@ -211,6 +211,12 @@ void openssl_add_all_ciphers_int(void)
     EVP_add_cipher(EVP_camellia_256_ctr());
 #endif
 
+#ifndef OPENSSL_NO_SPECK
+    EVP_add_cipher(EVP_speck_128_cbc());
+  /*  EVP_add_cipher(EVP_speck_64_128_cbc());
+    EVP_add_cipher_alias(EVP_speck_64_128_cbc, "SPECK64"); */
+#endif
+
 #ifndef OPENSSL_NO_CHACHA
     EVP_add_cipher(EVP_chacha20());
 # ifndef OPENSSL_NO_POLY1305
