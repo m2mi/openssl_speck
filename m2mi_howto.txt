@@ -20,3 +20,9 @@ Modifications:
 	- speck_cbc.c calling CBC impementations
 	- speck_misc.c containg API implemtations calling low-level implementations
 
+- Modify tls1.h in /include/openssl to define the Speck ciphersuites using IDs reserved for private use as defined in RFC5246
+
+- Modify s3_lib.c in /ssl to define the implementations of the Speck ciphersuites.
+
+- Modify ssl_locl.h to define the Bitmask SSL_SPECK128 for SSL_CIPHER.algorithms
+

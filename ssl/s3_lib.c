@@ -2429,6 +2429,24 @@ static SSL_CIPHER ssl3_ciphers[] = {
 
 #endif                          /* OPENSSL_NO_CAMELLIA */
 
+#ifndef OPENSSL_NO_SPECK
+{
+     1,
+     TLS1_TXT_RSA_WITH_SPECK_128_CBC_SHA256,
+     TLS1_CK_RSA_WITH_SPECK_128_CBC_SHA256,
+     SSL_kRSA,
+     SSL_aRSA,
+     SSL_SPECK128,
+     SSL_SHA256,
+     TLS1_2_VERSION, TLS1_2_VERSION,
+     DTLS1_2_VERSION, DTLS1_2_VERSION,
+     SSL_NOT_DEFAULT | SSL_HIGH,
+     SSL_HANDSHAKE_MAC_SHA256 | TLS1_PRF_SHA256,
+     128,
+     128,
+     },
+#endif
+
 #ifndef OPENSSL_NO_GOST
     {
      1,

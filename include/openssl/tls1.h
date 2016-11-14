@@ -749,6 +749,10 @@ SSL_CTX_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB,(void (*)(void))cb)
 # define TLS1_TXT_ECDHE_PSK_WITH_CAMELLIA_128_CBC_SHA256         "ECDHE-PSK-CAMELLIA128-SHA256"
 # define TLS1_TXT_ECDHE_PSK_WITH_CAMELLIA_256_CBC_SHA384         "ECDHE-PSK-CAMELLIA256-SHA384"
 
+/* Speck ciphersuites */
+# define TLS1_TXT_RSA_WITH_SPECK_128_CBC_SHA256               "SPECK128-SHA256"
+# define TLS1_CK_RSA_WITH_SPECK_128_CBC_SHA256              0xFF0000BA
+
 /* SEED ciphersuites from RFC4162 */
 # define TLS1_TXT_RSA_WITH_SEED_SHA                      "SEED-SHA"
 # define TLS1_TXT_DH_DSS_WITH_SEED_SHA                   "DH-DSS-SEED-SHA"
