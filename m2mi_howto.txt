@@ -2,7 +2,7 @@ Build:
 
 To build on OsX:
 
-> ./Configure darwin64-x86_64-cc -shared
+> ./Configure darwin64-x86_64-cc shared no-asm no-ssl2 no-ssl3 no-idea no-hw
 > make
 
 Modifications:
