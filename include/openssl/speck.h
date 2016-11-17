@@ -33,7 +33,7 @@ extern "C" {
 
 /* M2Mi: Should be the result of Key Expansion */
 struct speck_key_st {
-    unsigned long long *rd_key:
+    unsigned long long *rd_key;
     int rounds;
 };
 typedef struct speck_key_st SPECK_KEY;
@@ -47,7 +47,8 @@ void Speck_decrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key);
 
 void Speck_cbc_encrypt(const unsigned char *in, unsigned char *out,
-                          const SPECK_KEY *key, const int enc);
+                          size_t len, const SPECK_KEY *key,
+                          unsigned char *ivec, const int enc);
 void Speck_cbc_decrypt(const unsigned char *in, unsigned char *out,
                           size_t length, const SPECK_KEY *key,
                           unsigned char *ivec, const int enc);

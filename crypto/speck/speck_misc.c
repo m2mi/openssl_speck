@@ -26,11 +26,11 @@ int Speck_set_key(const unsigned char *userKey, const int bits, SPECK_KEY *key)
 void Speck_encrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key)
 {
-    speck_encrypt_128_256(key->rd_key, in, out);
+    speck_encrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
 }
 
 void Speck_decrypt(const unsigned char *in, unsigned char *out,
-                      const CAMELLIA_KEY *key)
+                      const SPECK_KEY *key)
 {
-    speck_decrypt_128_256(key->rd_key, in, out);
+    speck_decrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
 }

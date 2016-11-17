@@ -26,3 +26,9 @@ Modifications:
 
 - Modify ssl_locl.h to define the Bitmask SSL_SPECK128 for SSL_CIPHER.algorithms
 
+- Modify ssl_ciph.c to add NID info.
+
+- Modify configdata.pm to add buil-info file (l: 20), sdir (l: 54), Additional modifs to include .c and .o files(l: 4299-, 6367-)
+
+- Modify Configure (l: 313)
+
