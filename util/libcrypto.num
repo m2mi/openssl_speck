@@ -4219,3 +4219,8 @@ BIO_meth_set_write_ex                   4169	1_1_1	EXIST::FUNCTION:
 DSO_pathbyaddr                          4170	1_1_0c	EXIST::FUNCTION:
 DSO_dsobyaddr                           4171	1_1_0c	EXIST::FUNCTION:
 EVP_speck_128_cbc                       4172	1_1_1	EXIST::FUNCTION:SPECK
+Speck_encrypt                           4173	1_1_1	EXIST::FUNCTION:SPECK
+Speck_set_key                           4174	1_1_1	EXIST::FUNCTION:SPECK
+Speck_cbc_decrypt                       4175	1_1_1	EXIST::FUNCTION:SPECK
+Speck_decrypt                           4176	1_1_1	EXIST::FUNCTION:SPECK
+Speck_cbc_encrypt                       4177	1_1_1	EXIST::FUNCTION:SPECK

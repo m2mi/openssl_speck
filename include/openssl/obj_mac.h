@@ -4259,6 +4259,13 @@
 #define LN_camellia_256_cfb8            "camellia-256-cfb8"
 #define NID_camellia_256_cfb8           765
 
+#define OBJ_speck               1L,2L,6L,1L,4L,1L,8888L,123L
+
+#define SN_speck_128_cbc                "SPECK-128-CBC"
+#define LN_speck_128_cbc                "speck-128-cbc"
+#define NID_speck_128_cbc               1061
+#define OBJ_speck_128_cbc               OBJ_speck,1L
+
 #define SN_kisa         "KISA"
 #define LN_kisa         "kisa"
 #define NID_kisa                773

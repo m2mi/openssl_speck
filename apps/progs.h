@@ -259,6 +259,7 @@ static FUNCTION functions[] = {
 #ifndef OPENSSL_NO_CAMELLIA
     {FT_cipher, "camellia-256-ecb", enc_main, enc_options},
 #endif
+    {FT_cipher, "speck-128-cbc", enc_main, enc_options},
     {FT_cipher, "base64", enc_main, enc_options},
 #ifdef ZLIB
     {FT_cipher, "zlib", enc_main, enc_options},

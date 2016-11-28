@@ -583,6 +583,9 @@ static void list_disabled(void)
 #ifdef OPENSSL_NO_CAMELLIA
     BIO_puts(bio_out, "CAMELLIA\n");
 #endif
+#ifdef OPENSSL_NO_SPECK
+    BIO_puts(bio_out, "SPECK\n");
+#endif
 #ifdef OPENSSL_NO_CAST
     BIO_puts(bio_out, "CAST\n");
 #endif

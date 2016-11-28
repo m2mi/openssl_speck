@@ -68,8 +68,8 @@
 #define SSL_ENC_AES256CCM8_IDX  17
 #define SSL_ENC_GOST8912_IDX    18
 #define SSL_ENC_CHACHA_IDX      19
-// #define SSL_ENC_SPECK128_IDX    20
-#define SSL_ENC_NUM_IDX         20
+#define SSL_ENC_SPECK128_IDX    20
+#define SSL_ENC_NUM_IDX         21
 
 /* NB: make sure indices in these tables match values above */
 
@@ -100,18 +100,18 @@ static const ssl_cipher_table ssl_cipher_table_cipher[SSL_ENC_NUM_IDX] = {
     {SSL_AES256CCM8, NID_aes_256_ccm}, /* SSL_ENC_AES256CCM8_IDX 17 */
     {SSL_eGOST2814789CNT12, NID_gost89_cnt_12}, /* SSL_ENC_GOST8912_IDX */
     {SSL_CHACHA20POLY1305, NID_chacha20_poly1305},
-    // {SSL_SPECK128, NID_speck_128_cbc}, /* SSL_ENC_SPECK128_IDX 20 */
-};
-
-static const EVP_CIPHER *ssl_cipher_methods[SSL_ENC_NUM_IDX] = {
-    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL
+    {SSL_SPECK128, NID_speck_128_cbc}, /* SSL_ENC_SPECK128_IDX 20 */
 };
 
 // static const EVP_CIPHER *ssl_cipher_methods[SSL_ENC_NUM_IDX] = {
 //     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-//     NULL, NULL, NULL
+//     NULL, NULL
 // };
+
+static const EVP_CIPHER *ssl_cipher_methods[SSL_ENC_NUM_IDX] = {
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL
+};
 
 #define SSL_COMP_NULL_IDX       0
 #define SSL_COMP_ZLIB_IDX       1
@@ -304,7 +304,7 @@ static const SSL_CIPHER cipher_aliases[] = {
     {0, SSL_TXT_CAMELLIA256, 0, 0, 0, SSL_CAMELLIA256},
     {0, SSL_TXT_CAMELLIA, 0, 0, 0, SSL_CAMELLIA},
     {0, SSL_TXT_CHACHA20, 0, 0, 0, SSL_CHACHA20},
-    // {0, SSL_TXT_SPECK128, 0, 0, 0, SSL_SPECK128},
+    {0, SSL_TXT_SPECK128, 0, 0, 0, SSL_SPECK128},
 
     /* MAC aliases */
     {0, SSL_TXT_MD5, 0, 0, 0, 0, SSL_MD5},

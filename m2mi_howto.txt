@@ -20,11 +20,11 @@ Modifications:
 	- speck_cbc.c calling CBC impementations
 	- speck_misc.c containg API implemtations calling low-level implementations
 
-- Modify tls1.h in /include/openssl to define the Speck ciphersuites using IDs reserved for private use as defined in RFC5246
+- Modify tls1.h in /include/openssl to define the Speck ciphersuites using IDs reserved for private use as defined in RFC5246: 753-754
 
-- Modify s3_lib.c in /ssl to define the implementations of the Speck ciphersuites.
+- Modify s3_lib.c in /ssl to define the implementations of the Speck ciphersuites. 2432-2448
 
-- Modify ssl_locl.h to define the Bitmask SSL_SPECK128 for SSL_CIPHER.algorithms
+- Modify ssl_locl.h to define the Bitmask SSL_SPECK128 for SSL_CIPHER.algorithms: 271 (not in IBC procedure)
 
 - Modify ssl_ciph.c to add NID info.
 
@@ -32,8 +32,32 @@ Modifications:
 
 - Modify Configure (l: 313)
 
-- Modify util/mkdef.pl to add Speck as know algorithm
 
-- Modify crypto/speck/speck_misc.c to incompatible pointer type errors
-~
+******************************* Additional material from Marcin **************************
+
+- modify openssl.c in /apps: 586-588
+
+- modify progs.pl in /apps: 127.
+
+	-> generates progs.h file. 
+
+- modify speed.c in /apps: 59-61, 251, 425, 1297-1302, 1515-1520, 2174-2193, 1717, 1757
+
+- modfy mkdef.pl in /util: 83
+
+- Modify configdata.pm: 20, 54, 88-89, 154, 337-339 (asm) (could do 543 to add speck test)
+
+- Added e_speck.c in /crypto/evp
+
+- Modify objects.txt in /crypto/objects:  1368-1370
+
+- ssl.h: 155-156
+
+- ssl_init.c: 67-69
+
+********************* Further Julien ****************
+
+- modify mkdef.pl in /util: 267
+
+- modify build.info in /crypto/evp: 4
 

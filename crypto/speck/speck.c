@@ -30,13 +30,6 @@
 #define RR(x, r, w) ((x >> r) | (x << (w - r)))
 #define RL(x, r, w) ((x << r) | (x >> (w - r)))
 
-/*****************************************************************************/
-/* Private variables: NOT USED FOR THE MOMENT                                */
-/*****************************************************************************/
-static uint16_t * expanded_key_64 = NULL;
-static uint32_t * expanded_key_128 = NULL;
-static uint64_t * expanded_key_256 = NULL;
-
 // Key expansion for 128 bit block size, 256 bit key (4 x uint64)
 uint64_t * speck_expand_key_128_256(uint64_t k1, uint64_t k2, uint64_t k3, uint64_t k4)
 {

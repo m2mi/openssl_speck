@@ -213,6 +213,8 @@ void openssl_add_all_ciphers_int(void)
 
 #ifndef OPENSSL_NO_SPECK
     EVP_add_cipher(EVP_speck_128_cbc());
+    EVP_add_cipher_alias(SN_speck_128_cbc, "SPECK128");
+    EVP_add_cipher_alias(SN_speck_128_cbc, "speck128");
 #endif
 
 #ifndef OPENSSL_NO_CHACHA
