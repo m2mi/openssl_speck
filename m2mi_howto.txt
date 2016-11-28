@@ -32,3 +32,8 @@ Modifications:
 
 - Modify Configure (l: 313)
 
+- Modify util/mkdef.pl to add Speck as know algorithm
+
+- Modify crypto/speck/speck_misc.c to incompatible pointer type errors
+~
+
