@@ -80,7 +80,7 @@ my @known_algorithms = ( "RC2", "RC4", "RC5", "IDEA", "DES", "BF",
 			 "CAST", "MD2", "MD4", "MD5", "SHA", "SHA0", "SHA1",
 			 "SHA256", "SHA512", "RMD160",
 			 "MDC2", "WHIRLPOOL", "RSA", "DSA", "DH", "EC", "EC2M",
-			 "HMAC", "AES", "CAMELLIA", "SEED", "GOST",
+			 "HMAC", "AES", "CAMELLIA", "SPECK", "SEED", "GOST",
                          "SCRYPT", "CHACHA", "POLY1305", "BLAKE2",
 			 # EC_NISTP_64_GCC_128
 			 "EC_NISTP_64_GCC_128",
@@ -264,6 +264,7 @@ $crypto.=" include/openssl/sha.h" ; # unless $no_sha;
 $crypto.=" include/openssl/ripemd.h" ; # unless $no_ripemd;
 $crypto.=" include/openssl/aes.h" ; # unless $no_aes;
 $crypto.=" include/openssl/camellia.h" ; # unless $no_camellia;
+$crypto.=" include/openssl/speck.h" ; # unless $no_speck;
 $crypto.=" include/openssl/seed.h"; # unless $no_seed;
 
 $crypto.=" include/openssl/bn.h";

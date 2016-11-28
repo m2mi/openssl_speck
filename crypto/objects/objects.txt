@@ -1363,6 +1363,12 @@ camellia 50		: CAMELLIA-256-CMAC		: camellia-256-cmac
 			: CAMELLIA-192-CFB8		: camellia-192-cfb8
 			: CAMELLIA-256-CFB8		: camellia-256-cfb8
 
+# Definitions for Speck cipher - CBC MODE: no OIDs for these modes.
+
+!Alias speck 1 2 6 1 4 1 8888 123
+
+speck 	1	: SPECK-128-CBC		: speck-128-cbc
+
 # Definitions for SEED cipher - ECB, CBC, OFB mode
 
 member-body 410 200004  : KISA          : kisa

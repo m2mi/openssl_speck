@@ -751,7 +751,7 @@ SSL_CTX_callback_ctrl(ssl,SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB,(void (*)(void))cb)
 
 /* Speck ciphersuites */
 # define TLS1_TXT_RSA_WITH_SPECK_128_CBC_SHA256               "SPECK128-SHA256"
-# define TLS1_CK_RSA_WITH_SPECK_128_CBC_SHA256              0xFF0000BA
+# define TLS1_CK_RSA_WITH_SPECK_128_CBC_SHA256                0xFF0000BA
 
 /* SEED ciphersuites from RFC4162 */
 # define TLS1_TXT_RSA_WITH_SEED_SHA                      "SEED-SHA"
