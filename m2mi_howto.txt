@@ -61,3 +61,14 @@ Modifications:
 
 - modify build.info in /crypto/evp: 4
 
+
+******************* Tests ************************
+
+- created file specktest.c in /test
+
+- created file 05-test_speck.t in /test/recipes/
+
+- modify build.info in /test: 73-75
+
+- modify configdata.pm: 934-937, 2995-2998, 7868-7875
+
