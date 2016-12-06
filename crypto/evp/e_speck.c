@@ -21,11 +21,11 @@ typedef struct {
 #define IMPLEMENT_SPECK_CBC(keysize,cbits,iv_len) \
 				BLOCK_CIPHER_func_cbc(speck_##keysize,Speck,EVP_SPECK_KEY,ks) \
         		BLOCK_CIPHER_def_cbc(speck_##keysize,EVP_SPECK_KEY, \
-                             NID_speck_##keysize, keysize/8, iv_len, cbits, \
+                             NID_speck_##keysize, cbits, keysize/8, iv_len, \
                              (0)|EVP_CIPH_FLAG_DEFAULT_ASN1, \
                              speck_init_key, NULL, NULL, NULL, NULL)
 
-IMPLEMENT_SPECK_CBC(128,128,16)
+IMPLEMENT_SPECK_CBC(256,16,16)
 
 /* The subkey for Speck is generated. */
 static int speck_init_key(EVP_CIPHER_CTX * ctx, const unsigned char *key, const unsigned char *iv, int enc)

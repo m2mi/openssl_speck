@@ -16,7 +16,7 @@ int Speck_set_key(const unsigned char *userKey, const int bits, SPECK_KEY *key)
 {
     if (!userKey || !key)
         return -1;
-    /* For the moemnt only 256 bit keys */
+    /* For the moment only 256 bit keys */
     if (bits != 256)
         return -2;
     key->rounds = 4;

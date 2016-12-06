@@ -4261,10 +4261,10 @@
 
 #define OBJ_speck               1L,2L,6L,1L,4L,1L,8888L,123L
 
-#define SN_speck_128_cbc                "SPECK-128-CBC"
-#define LN_speck_128_cbc                "speck-128-cbc"
-#define NID_speck_128_cbc               1061
-#define OBJ_speck_128_cbc               OBJ_speck,1L
+#define SN_speck_256_cbc                "SPECK-256-CBC"
+#define LN_speck_256_cbc                "speck-256-cbc"
+#define NID_speck_256_cbc               1062
+#define OBJ_speck_256_cbc               OBJ_speck,1L
 
 #define SN_kisa         "KISA"
 #define LN_kisa         "kisa"

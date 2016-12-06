@@ -26,7 +26,7 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
    * In this example we are using 256 bit AES (i.e. a 256 bit key). The
    * IV size for *most* modes is the same as the block size. For AES this
    * is 128 bits */
-  if(1 != EVP_EncryptInit_ex(ctx, EVP_speck_128_cbc(), NULL, key, iv))
+  if(1 != EVP_EncryptInit_ex(ctx, EVP_speck_256_cbc(), NULL, key, iv))
     handleErrors();
 
   /* Provide the message to be encrypted, and obtain the encrypted output.
@@ -65,7 +65,7 @@ int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
    * In this example we are using 256 bit AES (i.e. a 256 bit key). The
    * IV size for *most* modes is the same as the block size. For AES this
    * is 128 bits */
-  if(1 != EVP_DecryptInit_ex(ctx, EVP_speck_128_cbc(), NULL, key, iv))
+  if(1 != EVP_DecryptInit_ex(ctx, EVP_speck_256_cbc(), NULL, key, iv))
     handleErrors();
 
   /* Provide the message to be decrypted, and obtain the plaintext output.
@@ -92,9 +92,6 @@ int main (int argc, char **argv)
   /* Set up the key and iv. Do I need to say to not hard code these in a
    * real application? :-)
    */
-  
-  fprintf(stderr, "Testing Speck");
-  fflush(stdout);
 
   /* A 256 bit key */
   unsigned char *key = (unsigned char *)"01234567890123456789012345678901";
@@ -103,8 +100,11 @@ int main (int argc, char **argv)
   unsigned char *iv = (unsigned char *)"01234567890123456";
 
   /* Message to be encrypted */
-  unsigned char *plaintext =
-                (unsigned char *)"The quick brown fox jumps over the lazy dog";
+  unsigned char *plaintext = (unsigned char *)"The quick brown fox jumps over the lazy dog";
+
+  
+  printf("Plaintext is:\n");
+  BIO_dump_fp (stdout, (const char *)plaintext, strlen ((const char *)plaintext));
 
   /* Buffer for ciphertext. Ensure the buffer is long enough for the
    * ciphertext which may be longer than the plaintext, dependant on the
@@ -120,30 +120,28 @@ int main (int argc, char **argv)
   /* Initialise the library */
   ERR_load_crypto_strings();
   OpenSSL_add_all_algorithms();
-  OPENSSL_config(NULL);
 
   /* Encrypt the plaintext */
-  ciphertext_len = encrypt (plaintext, strlen ((char *)plaintext), key, iv,
-                            ciphertext);
+  ciphertext_len = encrypt (plaintext, strlen ((const char *)plaintext), key, iv, ciphertext);
+
 
   /* Do something useful with the ciphertext here */
   printf("Ciphertext is:\n");
   BIO_dump_fp (stdout, (const char *)ciphertext, ciphertext_len);
 
   /* Decrypt the ciphertext */
-  decryptedtext_len = decrypt(ciphertext, ciphertext_len, key, iv,
-    decryptedtext);
+  decryptedtext_len = decrypt(ciphertext, ciphertext_len, key, iv, decryptedtext);
 
   /* Add a NULL terminator. We are expecting printable text */
   decryptedtext[decryptedtext_len] = '\0';
 
   /* Show the decrypted text */
   printf("Decrypted text is:\n");
-  printf("%s\n", decryptedtext);
+  BIO_dump_fp (stdout, (const char *)decryptedtext, decryptedtext_len);
 
   /* Clean up */
   EVP_cleanup();
   ERR_free_strings();
 
-  return 0;
+  return strcmp((const char *)plaintext, (const char *)decryptedtext);
 }

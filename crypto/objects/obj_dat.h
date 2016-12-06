@@ -961,10 +961,10 @@ static const unsigned char so[6774] = {
     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x09,0x10,0x01,0x13,  /* [ 6731] OBJ_id_smime_ct_contentCollection */
     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x09,0x10,0x01,0x17,  /* [ 6742] OBJ_id_smime_ct_authEnvelopedData */
     0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x09,0x10,0x01,0x1C,  /* [ 6753] OBJ_id_ct_xml */
-    0x2A,0x06,0x01,0x04,0x01,0xC5,0x38,0x7B,0x01,  /* [ 6764] OBJ_speck_128_cbc */
+    0x2A,0x06,0x01,0x04,0x01,0xC5,0x38,0x7B,0x01,  /* [ 6764] OBJ_speck_256_cbc */
 };
 
-#define NUM_NID 1062
+#define NUM_NID 1063
 static const ASN1_OBJECT nid_objs[NUM_NID] = {
     {"UNDEF", "undefined", NID_undef},
     {"rsadsi", "RSA Data Security, Inc.", NID_rsadsi, 6, &so[0]},
@@ -2027,7 +2027,8 @@ static const ASN1_OBJECT nid_objs[NUM_NID] = {
     {"id-smime-ct-contentCollection", "id-smime-ct-contentCollection", NID_id_smime_ct_contentCollection, 11, &so[6731]},
     {"id-smime-ct-authEnvelopedData", "id-smime-ct-authEnvelopedData", NID_id_smime_ct_authEnvelopedData, 11, &so[6742]},
     {"id-ct-xml", "id-ct-xml", NID_id_ct_xml, 11, &so[6753]},
-    {"SPECK-128-CBC", "speck-128-cbc", NID_speck_128_cbc, 9, &so[6764]},
+    { NULL, NULL, NID_undef },
+    {"SPECK-256-CBC", "speck-256-cbc", NID_speck_256_cbc, 9, &so[6764]},
 };
 
 #define NUM_SN 1053
@@ -2254,7 +2255,7 @@ static const unsigned int sn_objs[NUM_SN] = {
      167,    /* "SMIME-CAPS" */
      100,    /* "SN" */
     1006,    /* "SNILS" */
-    1061,    /* "SPECK-128-CBC" */
+    1062,    /* "SPECK-256-CBC" */
       16,    /* "ST" */
      143,    /* "SXNetID" */
     1021,    /* "TLS1-PRF" */
@@ -4096,7 +4097,7 @@ static const unsigned int ln_objs[NUM_LN] = {
       52,    /* "signingTime" */
      454,    /* "simpleSecurityObject" */
      496,    /* "singleLevelQuality" */
-    1061,    /* "speck-128-cbc" */
+    1062,    /* "speck-256-cbc" */
       16,    /* "stateOrProvinceName" */
      660,    /* "streetAddress" */
      498,    /* "subtreeMaximumQuality" */
@@ -4789,7 +4790,7 @@ static const unsigned int obj_objs[NUM_OBJ] = {
      439,    /* OBJ_pilotAttributeSyntax         0 9 2342 19200300 100 3 */
      440,    /* OBJ_pilotObjectClass             0 9 2342 19200300 100 4 */
      441,    /* OBJ_pilotGroups                  0 9 2342 19200300 100 10 */
-    1061,    /* OBJ_speck_128_cbc                1 2 6 1 4 1 8888 123 1 */
+    1062,    /* OBJ_speck_256_cbc                1 2 6 1 4 1 8888 123 1 */
      997,    /* OBJ_id_tc26_gost_3410_2012_512_paramSetTest 1 2 643 7 1 2 1 2 0 */
      998,    /* OBJ_id_tc26_gost_3410_2012_512_paramSetA 1 2 643 7 1 2 1 2 1 */
      999,    /* OBJ_id_tc26_gost_3410_2012_512_paramSetB 1 2 643 7 1 2 1 2 2 */

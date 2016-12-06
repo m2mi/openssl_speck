@@ -1059,3 +1059,4 @@ id_smime_ct_contentCollection		1058
 id_smime_ct_authEnvelopedData		1059
 id_ct_xml		1060
 speck_128_cbc		1061
+speck_256_cbc		1062

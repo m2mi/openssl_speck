@@ -248,7 +248,7 @@ static const char *names[ALGOR_NUM] = {
     "aes-128 cbc", "aes-192 cbc", "aes-256 cbc",
     "camellia-128 cbc", "camellia-192 cbc", "camellia-256 cbc",
     "evp", "sha256", "sha512", "whirlpool",
-    "aes-128 ige", "aes-192 ige", "aes-256 ige", "ghash", "speck-128 cbc"
+    "aes-128 ige", "aes-192 ige", "aes-256 ige", "ghash", "speck-256 cbc"
 };
 
 static double results[ALGOR_NUM][SIZE_NUM];
@@ -422,7 +422,7 @@ const OPTIONS speed_options[] = {
 #define D_IGE_192_AES   27
 #define D_IGE_256_AES   28
 #define D_GHASH         29
-#define D_CBC_128_SPECK 30
+#define D_CBC_256_SPECK 30
 
 static OPT_PAIR doit_choices[] = {
 #ifndef OPENSSL_NO_MD2
@@ -1295,9 +1295,11 @@ int speed_main(int argc, char **argv)
     CAMELLIA_KEY camellia_ks1, camellia_ks2, camellia_ks3;
 #endif
 #ifndef OPENSSL_NO_SPECK
-    static const unsigned char skey16[16] = {
+    static const unsigned char skey32[32] = {
         0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0,
-        0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x12
+        0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x12,
+        0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x12, 0x34,
+        0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x12, 0x34, 0x56
     };
     SPECK_KEY speck_ks1;
 #endif
@@ -1514,7 +1516,7 @@ int speed_main(int argc, char **argv)
 #endif
 #ifndef OPENSSL_NO_SPECK
         if (strcmp(*argv, "speck") == 0) {
-            doit[D_CBC_128_SPECK] = 1;
+            doit[D_CBC_256_SPECK] = 1;
             continue;
         }
 #endif
@@ -1648,7 +1650,7 @@ int speed_main(int argc, char **argv)
     Camellia_set_key(ckey32, 256, &camellia_ks3);
 #endif
 #ifndef OPENSSL_NO_SPECK
-    Speck_set_key(skey16, 128, &speck_ks1);
+    Speck_set_key(skey32, 256, &speck_ks1);
 #endif
 #ifndef OPENSSL_NO_IDEA
     IDEA_set_encrypt_key(key16, &idea_ks);
@@ -1714,7 +1716,7 @@ int speed_main(int argc, char **argv)
     c[D_IGE_192_AES][0] = count;
     c[D_IGE_256_AES][0] = count;
     c[D_GHASH][0] = count;
-    c[D_CBC_128_SPECK][0] = count;
+    c[D_CBC_256_SPECK][0] = count;
 
     for (i = 1; i < SIZE_NUM; i++) {
         long l0, l1;
@@ -1754,7 +1756,7 @@ int speed_main(int argc, char **argv)
         c[D_IGE_128_AES][i] = c[D_IGE_128_AES][i - 1] * l0 / l1;
         c[D_IGE_192_AES][i] = c[D_IGE_192_AES][i - 1] * l0 / l1;
         c[D_IGE_256_AES][i] = c[D_IGE_256_AES][i - 1] * l0 / l1;
-        c[D_CBC_128_SPECK][i] = c[D_CBC_128_SPECK][i - 1] * l0 / l1;
+        c[D_CBC_256_SPECK][i] = c[D_CBC_256_SPECK][i - 1] * l0 / l1;
     }
 
 #  ifndef OPENSSL_NO_RSA
@@ -2174,22 +2176,22 @@ int speed_main(int argc, char **argv)
     }
 #endif
 #ifndef OPENSSL_NO_SPECK
-    if (doit[D_CBC_128_SPECK]) {
+    if (doit[D_CBC_256_SPECK]) {
         if (async_jobs > 0) {
             BIO_printf(bio_err, "Async mode is not supported with %s\n",
-                       names[D_CBC_128_SPECK]);
-            doit[D_CBC_128_SPECK] = 0;
+                       names[D_CBC_256_SPECK]);
+            doit[D_CBC_256_SPECK] = 0;
         }
         for (testnum = 0; testnum < SIZE_NUM && async_init == 0; testnum++) {
-            print_message(names[D_CBC_128_SPECK], c[D_CBC_128_SPECK][testnum],
+            print_message(names[D_CBC_256_SPECK], c[D_CBC_256_SPECK][testnum],
                           lengths[testnum]);
             Time_F(START);
-            for (count = 0, run = 1; COND(c[D_CBC_128_SPECK][testnum]); count++)
+            for (count = 0, run = 1; COND(c[D_CBC_256_SPECK][testnum]); count++)
                 Speck_cbc_encrypt(loopargs[0].buf, loopargs[0].buf,
                                      (size_t)lengths[testnum], &speck_ks1,
                                      iv, SPECK_ENCRYPT);
             d = Time_F(STOP);
-            print_result(D_CBC_128_SPECK, testnum, count, d);
+            print_result(D_CBC_256_SPECK, testnum, count, d);
         }
     }
 #endif 

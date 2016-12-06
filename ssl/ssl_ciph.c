@@ -100,7 +100,7 @@ static const ssl_cipher_table ssl_cipher_table_cipher[SSL_ENC_NUM_IDX] = {
     {SSL_AES256CCM8, NID_aes_256_ccm}, /* SSL_ENC_AES256CCM8_IDX 17 */
     {SSL_eGOST2814789CNT12, NID_gost89_cnt_12}, /* SSL_ENC_GOST8912_IDX */
     {SSL_CHACHA20POLY1305, NID_chacha20_poly1305},
-    {SSL_SPECK128, NID_speck_128_cbc}, /* SSL_ENC_SPECK128_IDX 20 */
+    {SSL_SPECK128, NID_speck_256_cbc}, /* SSL_ENC_SPECK256_IDX 20 */
 };
 
 // static const EVP_CIPHER *ssl_cipher_methods[SSL_ENC_NUM_IDX] = {
