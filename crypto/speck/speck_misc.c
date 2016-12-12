@@ -20,10 +20,8 @@ int Speck_set_key(const unsigned char *userKey, const int bits, SPECK_KEY *key)
     if (bits != 256)
         return -2;
     key->rounds = 4;
-    uint64_t *expanded_key = malloc(sizeof(uint64_t));
-    //key->rd_key = malloc(sizeof(key->rd_key));
-    //key->rd_key = speck_expand_key_128_256(*(userKey), *(userKey + 8), *(userKey + 16), *(userKey + 24)); 
-    expanded_key = speck_expand_key_128_256(*(userKey), *(userKey + 8), *(userKey + 16), *(userKey + 24));
+
+    uint64_t *expanded_key = speck_expand_key_128_256(*(userKey), *(userKey + 8), *(userKey + 16), *(userKey + 24));
     key->rd_key = (long long unsigned int * const)expanded_key;
     return 0;
 }
@@ -31,17 +29,11 @@ int Speck_set_key(const unsigned char *userKey, const int bits, SPECK_KEY *key)
 void Speck_encrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key)
 {
-    uint64_t *round_key = malloc(sizeof(uint64_t));
-    memcpy(round_key,key->rd_key,sizeof(uint64_t));
-    //speck_encrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
-    speck_encrypt_128_256(round_key, (uint64_t *)in, (uint64_t *)out);
+    speck_encrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
 }
 
 void Speck_decrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key)
 {
-    uint64_t *round_key = malloc(sizeof(uint64_t));
-    memcpy(round_key,key->rd_key,sizeof(uint64_t));
-    //speck_decrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
-    speck_decrypt_128_256(round_key, (uint64_t *)in, (uint64_t *)out);
+    speck_decrypt_128_256(key->rd_key, (uint64_t *)in, (uint64_t *)out);
 }

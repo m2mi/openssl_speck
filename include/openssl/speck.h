@@ -12,8 +12,10 @@
 
 # include <openssl/opensslconf.h>
 
-# ifndef OPENSSL_NO_SPECK
+#ifndef OPENSSL_NO_SPECK
 # include <stddef.h>
+# include <stdlib.h>
+# include <stdint.h>
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -28,12 +30,13 @@ extern "C" {
 
 /* This should be a hidden type, but EVP requires that the size be known */
 
-/* M2Mi: define block size and rounds?? */
+/* Define block size and rounds */
 # define SPECK_BLOCK_SIZE 16
+# define SPECK_ROUNDS 34
 
 /* M2Mi: Should be the result of Key Expansion */
 struct speck_key_st {
-    unsigned long long *rd_key;
+    uint64_t *rd_key;
     int rounds;
 };
 typedef struct speck_key_st SPECK_KEY;

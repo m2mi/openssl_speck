@@ -50,7 +50,7 @@ uint64_t * speck_expand_key_128_256(uint64_t k1, uint64_t k2, uint64_t k3, uint6
         tk[idx] = (RR(tk[idx], 8, 64) + tk[0]) ^ i;
         tk[0] = RL(tk[0], 3, 64) ^ tk[idx];
         k[i+1] = tk[0];
-    }
+    } 
     return k;
 }
 
