@@ -153,7 +153,7 @@ extern "C" {
 # define SSL_TXT_CAMELLIA128     "CAMELLIA128"
 # define SSL_TXT_CAMELLIA256     "CAMELLIA256"
 # define SSL_TXT_CAMELLIA        "CAMELLIA"
-# define SSL_TXT_SPECK128        "SPECK128"
+# define SSL_TXT_SPECK256        "SPECK256"
 # define SSL_TXT_SPECK           "SPECK"
 # define SSL_TXT_CHACHA20        "CHACHA20"
 # define SSL_TXT_GOST            "GOST89"
@@ -196,7 +196,10 @@ extern "C" {
  * The following cipher list is used by default. It also is substituted when
  * an application-defined cipher list string starts with 'DEFAULT'.
  */
-# define SSL_DEFAULT_CIPHER_LIST "ALL:!COMPLEMENTOFDEFAULT:!eNULL"
+/* Only Speck enabled ciphers */
+# define SSL_DEFAULT_CIPHER_LIST "ALL:!AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
+/* Speck enabled ciphers first, then AES */
+// # define SSL_DEFAULT_CIPHER_LIST "ALL:+AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
 /*
  * As of OpenSSL 1.0.0, ssl_create_cipher_list() in ssl/ssl_ciph.c always
  * starts with a reasonable order, and all we have to do for DEFAULT is

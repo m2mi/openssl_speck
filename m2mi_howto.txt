@@ -20,7 +20,7 @@ Modifications:
 	- speck_cbc.c calling CBC impementations
 	- speck_misc.c containg API implemtations calling low-level implementations
 
-- Modify tls1.h in /include/openssl to define the Speck ciphersuites using IDs reserved for private use as defined in RFC5246: 753-754
+- Modify tls1.h in /include/openssl to define the Speck ciphersuites using IDs reserved for private use as defined in RFC5246: 753-754. Need to use Ids starting from 0x0300FF00.
 
 - Modify s3_lib.c in /ssl to define the implementations of the Speck ciphersuites. 2432-2448
 
@@ -71,4 +71,30 @@ Modifications:
 - modify build.info in /test: 73-75
 
 - modify configdata.pm: 934-937, 2995-2998, 7868-7875
+
+************************ select the enabled ciphersuite and their order ******************
+
+- Modify ssl.h in /ssl (line 200):
+
+	- To have a list of accepted cipher but Speck enabled on top: 
+		# define SSL_DEFAULT_CIPHER_LIST "ALL:+AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
+
+	- To have only Speck enabled:
+		# define SSL_DEFAULT_CIPHER_LIST "ALL:!AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
+
+************************ play with s_server and s_client to test ciphersuite ****************
+
+- create certificates on the server:
+
+	> ./openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365
+
+- start the server on port 8888 and tell it to only use one of the Speck enabled ciphersuite:
+
+	> ./openssl s_server -key key.pem -cert cert.pem -accept 8888 -cipher 'ECDHE-RSA-SPECK256-SHA256' 
+
+- add '-debug -msg -state' to the previous command for full debugging.
+
+- initiate the client
+
+	> /openssl s_client -connect localhost:8888 -msg
 
