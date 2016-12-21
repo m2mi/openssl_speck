@@ -197,7 +197,9 @@ extern "C" {
  * an application-defined cipher list string starts with 'DEFAULT'.
  */
 /* Only Speck enabled ciphers */
-# define SSL_DEFAULT_CIPHER_LIST "ALL:!AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
+//# define SSL_DEFAULT_CIPHER_LIST "ALL:!AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
+/* All ciphers but Speck first */
+# define SSL_DEFAULT_CIPHER_LIST "ALL:+AES:+CAMELLIA:+CHACHA20:+IDEA:+SEED:!aNULL:!eNULL"
 /* Speck enabled ciphers first, then AES */
 // # define SSL_DEFAULT_CIPHER_LIST "ALL:+AES:!CAMELLIA:!CHACHA20:!IDEA:!SEED:!aNULL:!eNULL"
 /*
