@@ -824,6 +824,7 @@ const EVP_CIPHER *EVP_camellia_256_ofb(void);
 const EVP_CIPHER *EVP_camellia_256_ctr(void);
 # endif
 # ifndef OPENSSL_NO_SPECK
+const EVP_CIPHER *EVP_speck_128_cbc(void);
 const EVP_CIPHER *EVP_speck_256_cbc(void);
 # endif
 # ifndef OPENSSL_NO_CHACHA

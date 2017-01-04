@@ -23,21 +23,17 @@ extern "C" {
 # define SPECK_ENCRYPT        1
 # define SPECK_DECRYPT        0
 
-/*
- * Because array size can't be a const in C, the following two are macros.
- * Both sizes are in bytes.
- */
+/* Define block size and rounds for 128 and 256 bit keys */
+# define SPECK_128_BLOCK_SIZE 8
+# define SPECK_128_ROUNDS 27
+# define SPECK_256_BLOCK_SIZE 16
+# define SPECK_256_ROUNDS 34
 
-/* This should be a hidden type, but EVP requires that the size be known */
-
-/* Define block size and rounds */
-# define SPECK_BLOCK_SIZE 16
-# define SPECK_ROUNDS 34
-
-/* M2Mi: Should be the result of Key Expansion */
+/* Contains the result of key expansion */
 struct speck_key_st {
-    uint64_t *rd_key;
-    int rounds;
+	int block_size;
+	int rounds;
+    uint32_t *rd_key;
 };
 typedef struct speck_key_st SPECK_KEY;
 
@@ -46,14 +42,12 @@ int Speck_set_key(const unsigned char *userKey, const int bits,
 
 void Speck_encrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key);
+
 void Speck_decrypt(const unsigned char *in, unsigned char *out,
                       const SPECK_KEY *key);
 
 void Speck_cbc_encrypt(const unsigned char *in, unsigned char *out,
                           size_t len, const SPECK_KEY *key,
-                          unsigned char *ivec, const int enc);
-void Speck_cbc_decrypt(const unsigned char *in, unsigned char *out,
-                          size_t length, const SPECK_KEY *key,
                           unsigned char *ivec, const int enc);
 
 # ifdef  __cplusplus

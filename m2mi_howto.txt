@@ -2,7 +2,8 @@ Build:
 
 To build on OsX:
 
-> ./Configure darwin64-x86_64-cc shared no-asm no-hw no-dso no-egd no-zlib no-ssl2 no-ssl3 no-idea no-chacha no-camellia no-rc4 no-rc5 no-rsa
+> ./Configure darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 shared no-asm --prefix=/Users/julien/Documents/openssl_test
+
 > make
 
 Modifications:

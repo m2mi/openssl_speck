@@ -30,11 +30,80 @@
 #define RR(x, r, w) ((x >> r) | (x << (w - r)))
 #define RL(x, r, w) ((x << r) | (x >> (w - r)))
 
-// Key expansion for 128 bit block size, 256 bit key (4 x uint64)
+/* ************* Best option on 32-bit machines: 64 bit block, 128 bit key, 27 rounds **************** */
+
+/* Key expansion */
+uint32_t * speck_expand_key_64_128(uint64_t k1, uint64_t k2)
+{
+    uint32_t i, idx;
+    uint32_t * k = (uint32_t *) malloc(sizeof(uint32_t) * SPECK_128_ROUNDS);
+    uint32_t tk[4];
+    uint64_t * m = (uint64_t *) &tk;
+    m[0] = k2; m[1] = k1;
+    
+    k[0] = tk[0];
+    
+    for (i=0; i<SPECK_128_ROUNDS - 1; i++)
+    {
+        idx = (i % 3) + 1;
+        tk[idx] = (RR(tk[idx], 8, 32) + tk[0]) ^ i;
+        tk[0] = RL(tk[0], 3, 32) ^ tk[idx];
+        k[i+1] = tk[0];
+    }
+    return k;
+}
+
+/* Encryption */
+int speck_encrypt_64_128(uint32_t * k, uint32_t * pt, uint32_t * ct)
+{
+    uint32_t i;
+    
+    uint32_t b[2];
+    b[0] = pt[1];
+    b[1] = pt[0];
+    
+    for (i=0; i<SPECK_128_ROUNDS; i++)
+    {
+        b[1] = (RR(b[1], 8, 32) + b[0]) ^ k[i];
+        b[0] = RL(b[0], 3, 32) ^ b[1];
+    }
+    
+    ct[0] = b[1];
+    ct[1] = b[0];
+    
+    return 1;
+}
+
+/* Decryption */
+int speck_decrypt_64_128(uint32_t * k, uint32_t * ct, uint32_t * pt)
+{
+    uint32_t i;
+    
+    uint32_t b[2];
+    b[0] = ct[1];
+    b[1] = ct[0];
+    
+    for (i=SPECK_128_ROUNDS; i>0; i--)
+    {
+        b[0] = b[0] ^ b[1];
+        b[0] = RR(b[0], 3, 32);
+        b[1] = (b[1] ^ k[i-1]) - b[0];
+        b[1] = RL(b[1], 8, 32);
+    }
+    
+    pt[0] = b[1];
+    pt[1] = b[0];
+    
+    return 1;
+}
+
+/* ************* Best option on 64-bit machines: 128 bit block, 256 bit key, 34 rounds **************** */
+
+/* Key expansion */
 uint64_t * speck_expand_key_128_256(uint64_t k1, uint64_t k2, uint64_t k3, uint64_t k4)
 {
     uint64_t i, idx;
-    uint64_t * k = (uint64_t *) malloc(sizeof(uint64_t) * 34);
+    uint64_t * k = (uint64_t *) malloc(sizeof(uint64_t) * SPECK_256_ROUNDS);
     uint64_t tk[4];
 
     tk[0] = k4;
@@ -44,7 +113,7 @@ uint64_t * speck_expand_key_128_256(uint64_t k1, uint64_t k2, uint64_t k3, uint6
     
     k[0] = tk[0];
     
-    for (i=0; i<34 - 1; i++)
+    for (i=0; i<SPECK_256_ROUNDS - 1; i++)
     {
         idx = (i % 3) + 1;
         tk[idx] = (RR(tk[idx], 8, 64) + tk[0]) ^ i;
@@ -54,7 +123,7 @@ uint64_t * speck_expand_key_128_256(uint64_t k1, uint64_t k2, uint64_t k3, uint6
     return k;
 }
 
-// Encryption for 128 bit block size, 256 bit key
+/* Block Encryption */
 int speck_encrypt_128_256(uint64_t * k, uint64_t * pt, uint64_t * ct)
 {
     uint64_t i;
@@ -63,7 +132,7 @@ int speck_encrypt_128_256(uint64_t * k, uint64_t * pt, uint64_t * ct)
     b[0] = pt[1];
     b[1] = pt[0];
     
-    for (i=0; i<34; i++)
+    for (i=0; i<SPECK_256_ROUNDS; i++)
     {
         b[1] = (RR(b[1], 8, 64) + b[0]) ^ k[i];
         b[0] = RL(b[0], 3, 64) ^ b[1];
@@ -76,7 +145,7 @@ int speck_encrypt_128_256(uint64_t * k, uint64_t * pt, uint64_t * ct)
 }
 
 
-// Decryption for 128 bit block size, 256 bit key
+/* Block Decryption */
 int speck_decrypt_128_256(uint64_t * k, uint64_t * ct, uint64_t * pt)
 {
     uint64_t i;
@@ -85,7 +154,7 @@ int speck_decrypt_128_256(uint64_t * k, uint64_t * ct, uint64_t * pt)
     b[0] = ct[1];
     b[1] = ct[0];
     
-    for (i=34; i>0; i--)
+    for (i=SPECK_256_ROUNDS; i>0; i--)
     {
         b[0] = b[0] ^ b[1];
         b[0] = RR(b[0], 3, 64);
@@ -97,90 +166,4 @@ int speck_decrypt_128_256(uint64_t * k, uint64_t * ct, uint64_t * pt)
     pt[1] = b[0];
     
     return 1;
-}
-
-void xor128(uint64_t * result, uint64_t * a, uint64_t * b)
-{
-    result[0] = a[0] ^ b[0];
-    result[1] = a[1] ^ b[1];
-}
-
-size_t speck_128_256_cbc_encrypt(uint64_t k1, uint64_t k2, uint64_t k3, uint64_t k4, uint64_t iv1, uint64_t iv2, void * plaintext, void * ciphertext, size_t length)
-{
-    size_t i = 0;
-    int block_size = sizeof(uint64_t) * 2;
-    size_t blocks = length / block_size;
-    uint8_t padding_bytes = (int) (block_size - (length - blocks * block_size));
-    if (padding_bytes == 0) padding_bytes = block_size;
-    uint64_t * kx = speck_expand_key_128_256(k1, k2, k3, k4);
-    uint64_t last[2];
-    uint64_t x[2];
-    last[0] = iv2;
-    last[1] = iv1;
-    uint64_t last_block[2];
-    uint8_t * last_block_bytes = (uint8_t *) &last_block;
-    uint64_t * pt = (uint64_t *) plaintext;
-    uint64_t * ct = (uint64_t *) ciphertext;
-    do
-    {
-        xor128(x, pt, last);
-        speck_encrypt_128_256(kx, x, ct);
-        last[0] = ct[0];
-        last[1] = ct[1];
-        ct+=2;
-        pt+=2;
-        i++;
-    } while (i < blocks);
-    
-    // Create last padded block
-    pt = (uint64_t *) plaintext;
-    memcpy(&last_block, &pt[i], block_size - padding_bytes);
-    memset(&last_block_bytes[block_size - padding_bytes], (uint8_t) padding_bytes, padding_bytes);
-    
-    xor128(x, last_block, last);
-    speck_encrypt_128_256(kx, x, ct);
-    i++;
-    
-    free(kx);
-    return (i * block_size);
-}
-
-size_t speck_128_256_cbc_decrypt(uint64_t k1, uint64_t k2, uint64_t k3, uint64_t k4, uint64_t iv1, uint64_t iv2, void * ciphertext, void * plaintext, size_t length)
-{
-    size_t i = 0;
-    int block_size = sizeof(uint64_t) * 2;
-    size_t blocks = length / block_size;
-    uint8_t padding_bytes;
-    uint64_t * kx = speck_expand_key_128_256(k1, k2, k3, k4);
-    uint64_t last[2];
-    uint64_t x[2];
-    last[0] = iv2;
-    last[1] = iv1;
-    uint64_t * pt = (uint64_t *) plaintext;
-    uint64_t * ct = (uint64_t *) ciphertext;
-    do
-    {
-        speck_decrypt_128_256(kx, ct, x);
-        xor128(pt, x, last);
-        last[0] = ct[0];
-        last[1] = ct[1];
-        ct+=2;
-        pt+=2;
-        i++;
-    } while (i < blocks);
-    
-    free(kx);
-    
-    // Check for padding bytes
-    uint8_t * pt_bytes = (uint8_t *) plaintext;
-    padding_bytes = pt_bytes[i * block_size -1];
-    if (padding_bytes > block_size) return 0;
-    int j;
-    for (j=0; j<padding_bytes; j++) if (pt_bytes[i * block_size -1 - j] != padding_bytes)
-    {
-        // Error in padding
-        return 0;
-    }
-    
-    return (i * block_size - padding_bytes);
 }

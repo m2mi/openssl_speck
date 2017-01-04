@@ -4266,6 +4266,11 @@
 #define NID_speck_256_cbc               1062
 #define OBJ_speck_256_cbc               OBJ_speck,1L
 
+#define SN_speck_128_cbc                "SPECK-128-CBC"
+#define LN_speck_128_cbc                "speck-128-cbc"
+#define NID_speck_128_cbc               1061
+#define OBJ_speck_128_cbc               OBJ_speck,2L
+
 #define SN_kisa         "KISA"
 #define LN_kisa         "kisa"
 #define NID_kisa                773

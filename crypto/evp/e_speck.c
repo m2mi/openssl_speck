@@ -25,16 +25,13 @@ typedef struct {
                              (0)|EVP_CIPH_FLAG_DEFAULT_ASN1, \
                              speck_init_key, NULL, NULL, NULL, NULL)
 
+IMPLEMENT_SPECK_CBC(128,8,8)
 IMPLEMENT_SPECK_CBC(256,16,16)
 
 /* The subkey for Speck is generated. */
 static int speck_init_key(EVP_CIPHER_CTX * ctx, const unsigned char *key, const unsigned char *iv, int enc)
 {
-	int ret;
-	if (enc)
-		ret = Speck_set_key(key, ctx->key_len * 8, ctx->cipher_data);
-	else
-		ret = Speck_set_key(key, ctx->key_len * 8, ctx->cipher_data);
+	int ret = Speck_set_key(key, ctx->key_len * 8, ctx->cipher_data);
 	if (ret < 0) {
 		EVPerr(EVP_F_SPECK_INIT_KEY, EVP_R_SPECK_KEY_SETUP_FAILED);
 		return 0;
