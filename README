@@ -14,4 +14,4 @@ The project provides:
 2. Integration for CBC-Speck 128 bits key, 64 (2x32) bits block size, 27 rounds
 3. Integration for CBC-Speck 256 bits key, 128 (2x64) bits block size, 34 rounds
 
-Complete documentation and how-to can be found here: http://www.m2mi.com/documentation.html
+Information for building this project can be found in the m2mi_howto.txt
