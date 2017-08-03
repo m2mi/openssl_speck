@@ -6,6 +6,8 @@ To build on OsX:
 
 > make
 
+> make install
+
 Modifications:
 
 - Add speck.h in /include/openssl/ to define API methods for Speck
