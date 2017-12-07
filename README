@@ -1,12 +1,11 @@
-# IoT Security Suite | OpenSSL - SPECK
+OpenSSL SPECK
 
-The IoT Security Suite, commissioned by the Department of Homeland Security (DHS) Science and Technology Directorate (S&T) under the Silicon Valley Innovation Program (SVIP), is developed by  Machine-to-Machine Intelligence  (M2Mi) Corporation and available as open source under the Apache License. The IoT Security Suite provides an implementation of fast encryption ciphers that use minimal resources capable of operating in small IoT devices and sensors that have limited or constrained capabilities. In order to meet this requirement, the IoT Security Suite uses lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 which are part of the SIMON & SPECK family of ciphers designed for both hardware and software implementations.
+Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013.[3] Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher. The NSA began working on the Simon and Speck ciphers in 2012. The agency anticipated some agencies in the US federal government would need a cipher that would operate well on a diverse collection of Internet of Things devices while maintaining an acceptable level of security. Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
 
-Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
-
-This open source project provides an implementation of OpenSSL with the Speck block cipher to be used by IoT developers. The OpenSSL Project is a collaborative effort to develop a robust, commercial-grade, fully featured, and Open Source toolkit implementing Transport Layer Security (TLS) as well as a full-strength general purpose cryptographic library. 
+This open source project provides an implementation of OpenSSL with the Speck block cipher that can be used by IoT developers. The OpenSSL Project is a collaborative effort to develop a robust, commercial-grade, fully featured, and Open Source toolkit implementing Transport Layer Security (TLS) as well as a full-strength general purpose cryptographic library. 
 
 See https://eprint.iacr.org/2013/404.pdf for the original Simon & Speck paper.
+    https://en.wikipedia.org/wiki/Speck_(cipher)
 
 The project provides:
 
@@ -14,4 +13,5 @@ The project provides:
 2. Integration for CBC-Speck 128 bits key, 64 (2x32) bits block size, 27 rounds
 3. Integration for CBC-Speck 256 bits key, 128 (2x64) bits block size, 34 rounds
 
-Information for building this project can be found in the m2mi_howto.txt
+The entire 
+Information for building this project can be found in the m2mi_howto.txt and its Github Wiki.
