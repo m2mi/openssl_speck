@@ -1,8 +1,8 @@
 Build:
 
-To build on OsX:
+To build:
 
-> ./Configure darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 shared no-asm --prefix=/Users/julien/Documents/openssl_test
+> ./Configure [your device architecture] enable-ec_nistp_64_gcc_128 shared no-asm --prefix=/usr/local/ssl --openssldir=/usr/local/ssl
 
 > make
 
